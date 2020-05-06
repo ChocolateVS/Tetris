@@ -1,7 +1,22 @@
+/*
+- Check for block touching top and bottom on update    //DONE
+- Check for block touching Left on left press          //DONE
+- Check for block touching right on right press        //DONE
+- Check for block collisions (Stacking) on update      //DONE - rare unkown issue
+- Check for block collision on left press              //DONE
+- Check for block collision on right press             //DONE
+- Check for left collision on block rotate             ?? - ISSUES
+- Check for right collision on block rotate            ?? - ISSUES
+- Check for block collision on rotate                  ?? - ISSUES
+
+- Add inactive block positions to array properly       ?? - ISSUES
+- Check for full lines and tetrises
+*/
+
 /////////////MENU SPREADDDDDD///////////
 var canvas = document.getElementById('canvas');
 
-var gameSpeed = 10;//document.getElementById("gameSpeedSlider").value;
+var gameSpeed = 40;//document.getElementById("gameSpeedSlider").value;
 var gameSpeedSlider = document.getElementById("gameSpeedSlider");
 var count = 0;
 gameSpeedSlider.oninput = function() {
@@ -151,31 +166,38 @@ window.addEventListener("keydown", event => {
         if (Math.round(activeTetriminos[0].x * 10) / 10 == gX || Math.round(activeTetriminos[0].x1 * 10) / 10 == gX || Math.round(activeTetriminos[0].x2 * 10) / 10 == gX || Math.round(activeTetriminos[0].x3 * 10) / 10 == gX){
             moveLeft = false;
             console.log("NO YOU CANT LEAVE!");
+            return;
         }
         else if (moveLeft){
+            console.log("NEXT");
             inactiveTetriminos.forEach(element => {
-                console.log("0", Math.round(element.x * n) / n, Math.round((activeTetriminos[0].x - rW) * n) / n, Math.round(element.y * n) / n, Math.round((activeTetriminos[0].y + rW) * n) / n);
-                console.log("1", Math.round(element.x * n) / n, Math.round((activeTetriminos[0].x1 - rW) * n) / n, Math.round(element.y * n) / n, Math.round((activeTetriminos[0].y1 + rW) * n) / n);
-                console.log("2", Math.round(element.x * n) / n, Math.round((activeTetriminos[0].x2 - rW) * n) / n, Math.round(element.y * n) / n, Math.round((activeTetriminos[0].y2 + rW) * n) / n);
-                console.log("3", Math.round(element.x * n) / n, Math.round((activeTetriminos[0].x3 - rW) * n) / n, Math.round(element.y * n) / n, Math.round((activeTetriminos[0].y3 + rW) * n) / n);
-                if (Math.round(element.x * n) / n == Math.round((activeTetriminos[0].x - rW) * n) / n && Math.round(element.y * n) / n == Math.round((activeTetriminos[0].y + rW) * n) / n) {
+                //console.log("0", Math.round(element.x * n) / n, Math.round((activeTetriminos[0].x - rW) * n) / n, Math.round(element.y * n) / n, Math.round((activeTetriminos[0].y + rW) * n) / n);
+                //console.log("1", Math.round(element.x * n) / n, Math.round((activeTetriminos[0].x1 - rW) * n) / n, Math.round(element.y * n) / n, Math.round((activeTetriminos[0].y1 + rW) * n) / n);
+                //console.log("2", Math.round(element.x * n) / n, Math.round((activeTetriminos[0].x2 - rW) * n) / n, Math.round(element.y * n) / n, Math.round((activeTetriminos[0].y2 + rW) * n) / n);
+                //console.log("3", Math.round(element.x * n) / n, Math.round((activeTetriminos[0].x3 - rW) * n) / n, Math.round(element.y * n) / n, Math.round((activeTetriminos[0].y3 + rW) * n) / n);
+                if (Math.round(element.x * n) / n == Math.round((activeTetriminos[0].x - rW) * n) / n && Math.round(element.y * n) / n == Math.round((activeTetriminos[0].y) * n) / n) {
                     moveLeft = false;
                     console.log("THERE WOULD BE A COLLISION 0");
+                    return;
                 }
-                if (Math.round(element.x * n) / n == Math.round((activeTetriminos[0].x1 - rW) * n) / n && Math.round(element.y * n) / n == Math.round((activeTetriminos[0].y1 + rW) * n) / n) {
+                if (Math.round(element.x * n) / n == Math.round((activeTetriminos[0].x1 - rW) * n) / n && Math.round(element.y * n) / n == Math.round((activeTetriminos[0].y1) * n) / n) {
                     moveLeft = false;
                     console.log("THERE WOULD BE A COLLISION 1");
+                    return;
                 }
-                if (Math.round(element.x * n) / n == Math.round((activeTetriminos[0].x2 - rW) * n) / n && Math.round(element.y * n) / n == Math.round((activeTetriminos[0].y2 + rW) * n) / n) {
+                if (Math.round(element.x * n) / n == Math.round((activeTetriminos[0].x2 - rW) * n) / n && Math.round(element.y * n) / n == Math.round((activeTetriminos[0].y2) * n) / n) {
                     moveLeft = false;
                     console.log("THERE WOULD BE A COLLISION 2");
+                    return;
                 }
-                if (Math.round(element.x * n) / n == Math.round((activeTetriminos[0].x3 - rW) * n) / n && Math.round(element.y * n) / n == Math.round((activeTetriminos[0].y3 + rW) * n) / n) {
+                if (Math.round(element.x * n) / n == Math.round((activeTetriminos[0].x3 - rW) * n) / n && Math.round(element.y * n) / n == Math.round((activeTetriminos[0].y3) * n) / n) {
                     moveLeft = false;
                     console.log("THERE WOULD BE A COLLISION 3");
+                    return;
                 }
             });
         }
+        
         //console.log("MOVE?: ", moveLeft);
         if (moveLeft){
             activeTetriminos[0].x -= activeTetriminos[0].h;
@@ -190,13 +212,39 @@ window.addEventListener("keydown", event => {
         }
     }
     if (event.keyCode === 39) {
-        if (Math.round(rX1 * 10) / 10 == Math.round((gX + (9 * rW)) * 10) / 10 || Math.round(rX3 * 10) / 10 == Math.round((gX + (9 * rW)) * 10) / 10){
+        if (Math.round(activeTetriminos[0].x * 10) / 10 == Math.round((gX + (9 * rW)) * 10) / 10 || Math.round(activeTetriminos[0].x1 * 10) / 10 == Math.round((gX + (9 * rW)) * 10) / 10 || Math.round(activeTetriminos[0].x2 * 10) / 10 == Math.round((gX + (9 * rW)) * 10) / 10 || Math.round(activeTetriminos[0].x3 * 10) / 10 == Math.round((gX + (9 * rW)) * 10) / 10){
             moveRight = false;
+            console.log("NO YOU CANT LEAVE THIS WAY EITHER");
+            return;
         }
         else if (moveRight) {
             inactiveTetriminos.forEach(element => {              
-                if (element.x == (rX + rW) && element.y == rY + rW || element.x == (rX1 + rW) && element.y == rY1 + rW || element.x == (rX2 + rW) && element.y == rY2 + rW || element.x == (rX3 + rW) && element.y == rY3 + rW) {
+                /*if (element.x == (activeTetriminos[0].x + rW) && element.y == rY + rW || element.x == (rX1 + rW) && element.y == rY1 + rW || element.x == (rX2 + rW) && element.y == rY2 + rW || element.x == (rX3 + rW) && element.y == rY3 + rW) {
                     moveRight = false;
+                }*/
+                //console.log("0", Math.round(element.x * n) / n, Math.round((activeTetriminos[0].x + rW) * n) / n, Math.round(element.y * n) / n, Math.round((activeTetriminos[0].y) * n) / n);
+                //console.log("1", Math.round(element.x * n) / n, Math.round((activeTetriminos[0].x1 + rW) * n) / n, Math.round(element.y * n) / n, Math.round((activeTetriminos[0].y1) * n) / n);
+                //console.log("2", Math.round(element.x * n) / n, Math.round((activeTetriminos[0].x2 + rW) * n) / n, Math.round(element.y * n) / n, Math.round((activeTetriminos[0].y2) * n) / n);
+                //console.log("3", Math.round(element.x * n) / n, Math.round((activeTetriminos[0].x3 + rW) * n) / n, Math.round(element.y * n) / n, Math.round((activeTetriminos[0].y3) * n) / n);
+                if (Math.round(element.x * n) / n == Math.round((activeTetriminos[0].x + rW) * n) / n && Math.round(element.y * n) / n == Math.round((activeTetriminos[0].y) * n) / n) {
+                    moveRight = false;
+                    console.log("THERE WOULD BE A COLLISION 0");
+                    return;
+                }
+                if (Math.round(element.x * n) / n == Math.round((activeTetriminos[0].x1 + rW) * n) / n && Math.round(element.y * n) / n == Math.round((activeTetriminos[0].y1) * n) / n) {
+                    moveRight = false;
+                    console.log("THERE WOULD BE A COLLISION 1");
+                    return;
+                }
+                if (Math.round(element.x * n) / n == Math.round((activeTetriminos[0].x2 + rW) * n) / n && Math.round(element.y * n) / n == Math.round((activeTetriminos[0].y2) * n) / n) {
+                    moveRight = false;
+                    console.log("THERE WOULD BE A COLLISION 2");
+                    return;
+                }
+                if (Math.round(element.x * n) / n == Math.round((activeTetriminos[0].x3 + rW) * n) / n && Math.round(element.y * n) / n == Math.round((activeTetriminos[0].y3) * n) / n) {
+                    moveRight = false;
+                    console.log("THERE WOULD BE A COLLISION 3");
+                    return;
                 }
             });   
         }
@@ -389,10 +437,10 @@ function rotateBlock(newIndex, xm1, ym1, xm2, ym2, xm3, ym3, xm4, ym4) {
     var ax4 = activeTetriminos[0].x3;
     var aW =  activeTetriminos[0].w
     
-    if (ax1 + (xm1 * aW) == gridX || ax1 + (xm1 * aW) == gridX + gridWidth * aW || activeTetriminos[0].x1 + (xm2 * activeTetriminos[0].w) == gridX || activeTetriminos[0].x1 + (xm1 * activeTetriminos[0].w) == gridX + gridWidth * activeTetriminos[0].w || activeTetriminos[0].x2 + (xm3 * activeTetriminos[0].w) == gridX || activeTetriminos[0].x2 + (xm1 * activeTetriminos[0].w) == gridX + gridWidth * activeTetriminos[0].w || activeTetriminos[0].x3 + (xm4 * activeTetriminos[0].w) == gridX || activeTetriminos[0].x3 + (xm1 * activeTetriminos[0].w) == gridX + gridWidth * activeTetriminos[0].w) {
+    /*if (ax1 + (xm1 * aW) == gridX || ax1 + (xm1 * aW) == gridX + gridWidth * aW || activeTetriminos[0].x1 + (xm2 * activeTetriminos[0].w) == gridX || activeTetriminos[0].x1 + (xm1 * activeTetriminos[0].w) == gridX + gridWidth * activeTetriminos[0].w || activeTetriminos[0].x2 + (xm3 * activeTetriminos[0].w) == gridX || activeTetriminos[0].x2 + (xm1 * activeTetriminos[0].w) == gridX + gridWidth * activeTetriminos[0].w || activeTetriminos[0].x3 + (xm4 * activeTetriminos[0].w) == gridX || activeTetriminos[0].x3 + (xm1 * activeTetriminos[0].w) == gridX + gridWidth * activeTetriminos[0].w) {
         console.log("HMHMMM");
         return;
-    }
+    }*/
     activeTetriminos[0].x = activeTetriminos[0].x + (xm1 * activeTetriminos[0].w);
     activeTetriminos[0].x1 = activeTetriminos[0].x1 + (xm2 * activeTetriminos[0].w);
     activeTetriminos[0].x2 = activeTetriminos[0].x2 + (xm3 * activeTetriminos[0].w);

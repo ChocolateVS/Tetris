@@ -2,7 +2,7 @@ body {
     margin:0;
     padding:0;
     background-color:rgba(0,0,0,0.7);
-    font-family:"Roboto", monospace;
+    font-family:"Roboto", monospace, "Arial";
     color: white;
 }
 
@@ -25,13 +25,33 @@ a {
     font:"Roboto", monospace;
 }
 
-canvas {
+#canvas {
+    padding: 0;
+    margin: auto;
+    display: block;
     border:5px solid black;
     border-radius:10px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 
-#leftMenu {
+#topLeftMenu {
     position:fixed;
     margin-top: 20px;
     margin-left: 20px;
+}
+
+#bottomLeftMenu {
+    position:fixed;
+    bottom:0;
+    margin-bottom: 20px;
+    margin-left: 20px;
+}
+
+#backgroundCanvas {
+    position:fixed; 
+    
 }

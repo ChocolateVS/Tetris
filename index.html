@@ -6,14 +6,37 @@
             <link rel="stylesheet" type="text/css" href="assets/css/style.css">
             <!--<link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">-->
         </header>
-        <div id="leftMenu">
+        <div id="topLeftMenu">
             <input type="range" id="gameSpeedSlider" value="50" min="1" max="100">
             <br>
             <span>SPEED:<span id="speed"></span></span>
         </div>
+        <div id="bottomLeftMenu">
+            <span id="text">
+            Welcome to TETRIS <br>
+            Please Ignore the issues until I figure out how to fix them :')', <br>
+            - Lines won't clear <br>
+            - Currently no score <br>
+            - No Menu, game just starts etc <br>
+            - Blocks wont stack properly on rare occasions <br>
+            - Yes playing is currently completly pointless lol <br>
+            
+            CONTROLS: <br>
+            LEFT Arrow: Move Left <br>
+            RIGHT Arrow: Move Right <br>
+            Z: Rotate Left <br>
+            X: Rotate Right <br>
+            R: Restart <br>
+            +/-: Change Game Speed
+            </span>
+        </div>
         <main>
-            <center><canvas id="canvas" class="canvas"></canvas></center>
+            <canvas id="backgroundCanvas"></canvas>
+            
+                <canvas id="canvas" class="canvas"></canvas>
+            
         </main>
     </body>
     <script src="assets/js/script.js"></script>
+    <script src="assets/js/background.js"></script>
 </html>
