@@ -12,8 +12,21 @@
 - Add inactive block positions to array properly       ?? - ISSUES
 - Check for full lines and tetrises
 */
-
-/////////////MENU SPREADDDDDD///////////
+function sound(src) {
+  this.sound = document.createElement("audio");
+  this.sound.src = src;
+  this.sound.setAttribute("preload", "auto");
+  this.sound.setAttribute("controls", "none");
+  this.sound.style.display = "none";
+  document.body.appendChild(this.sound);
+  this.play = function(){
+    this.sound.play();
+  }
+  this.stop = function(){
+    this.sound.pause();
+  }
+}
+var placedSound;
 var canvas = document.getElementById('canvas');
 
 var gameSpeed = 40;//document.getElementById("gameSpeedSlider").value;
@@ -57,6 +70,12 @@ var moveLeft = true;
 var moveRight = true;
 var rows = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
+function start() {
+    placedSound = new sound("assets/sounds/fall.mp3");
+    randomTetrimino();
+    animate();
+}
+start();
 function randomTetrimino() {
     var dy = 1;
     var tetrimino = Math.floor(Math.random() * tetriminos.length);
@@ -75,8 +94,7 @@ function randomTetrimino() {
     var tetriminoColor = newTetrimino[8];
     activeTetriminos.push(new DrawTetrimino(x, y, x1, y1, x2, y2, x3, y3, w, h, tetriminoColor, tetrimino, dy));
 }
-randomTetrimino();
-animate();
+
 function grid() {
     var fillColor;
     var h = tetriminoHeight;
@@ -85,10 +103,10 @@ function grid() {
     var y = gridY;
     for (j=0; j<gridHeight; j++){
         if (j < loadingArea) {
-            fillColor = "rgba(255,0,0,0.5)";
+            fillColor = "rgba(255,0,0,0.7)";
         }
         if (j > loadingArea) {
-            fillColor = "rgba(0,100,255,0.5)";
+            fillColor = "rgba(0,100,255,0.7)";
         }
         for (i=0; i<gridWidth; i++){
             c.beginPath();
@@ -96,7 +114,7 @@ function grid() {
             c.fillStyle = fillColor;
             c.rect(x,y,w,h);
             c.fill();
-            c.stroke();
+            //c.stroke();
             c.closePath();
             c.beginPath();
             c.strokeStyle = "";
@@ -516,6 +534,7 @@ function DrawTetrimino(x, y, x1, y1, x2, y2, x3, y3, w, h, color, index, dy) {
                     
                     if (Math.round(this.x * 1000) / 1000 == ix && this.y + this.h == iy || Math.round(this.x1 * 1000) / 1000 == ix && this.y1 + this.h == iy || Math.round(this.x2 * 1000) / 1000 == ix && this.y2 + this.h == iy || Math.round(this.x3 * 1000) / 1000 == ix && this.y3 + this.h == iy){
                         console.log("collision");
+                        placedSound.play();
                         activeTetriminos = [];
 
                         inactiveTetriminos.push(new DrawInactive(this.x, this.y, this.w, this.h, this.color));
@@ -548,6 +567,7 @@ function DrawTetrimino(x, y, x1, y1, x2, y2, x3, y3, w, h, color, index, dy) {
         //console.log("Y3: ", this.y3 / 23, this.h, "Y: ", this.y / 23, this.h);
         if (Math.round(this.y/this.h) == 23 || Math.round(this.y1/this.h) == 23 || Math.round(this.y2/this.h) == 23 || Math.round(this.y3/this.h) == 23) {     
             go = false;
+            placedSound.play();
             activeTetriminos = [];
             randomTetrimino();
             inactiveTetriminos.push(new DrawInactive(this.x, this.y, this.w, this.h, this.color));

@@ -88,17 +88,17 @@ function DrawFallingTetrimino(x, y, x1, y1, x2, y2, x3, y3, w, h, color, dy) {
             this.y3 += (this.dy * this.h); 
         }*/
         
-        if (this.y > canvas.height + this.w) {
-            this.y = this.y - (canvas.height + this.w * 4);
+        if (this.y > canvasB.height + this.w) {
+            this.y = this.y - (canvasB.height + this.w * 4);
         }
-        if (this.y1 > canvas.height + this.w) {
-            this.y1 = this.y1 - (canvas.height + this.w * 4);
+        if (this.y1 > canvasB.height + this.w) {
+            this.y1 = this.y1 - (canvasB.height + this.w * 4);
         }
-        if (this.y2 > canvas.height + this.w) {
-            this.y2 = this.y2 - (canvas.height + this.w * 4);
+        if (this.y2 > canvasB.height + this.w) {
+            this.y2 = this.y2 - (canvasB.height + this.w * 4);
         }
-        if (this.y3 > canvas.height + this.w) {
-            this.y3 = this.y3 - (canvas.height + this.w * 4);
+        if (this.y3 > canvasB.height + this.w) {
+            this.y3 = this.y3 - (canvasB.height + this.w * 4);
         }
         
         this.y += (this.dy); 
@@ -109,8 +109,6 @@ function DrawFallingTetrimino(x, y, x1, y1, x2, y2, x3, y3, w, h, color, dy) {
         this.draw();
     }
 }
-
-
 
 items = [];
 items.forEach(element => {
