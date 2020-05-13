@@ -4,8 +4,15 @@
         <header>
             <title>TETRIS</title>
             <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+            <link rel="icon" type="image/png" href="favicon.ico">
             <!--<link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">-->
         </header>
+        <main>  
+            <canvas id="backgroundCanvas"></canvas>
+            
+                <canvas id="canvas" class="canvas"></canvas>
+            
+        </main>
         <div id="topLeftMenu">
             <input type="range" id="gameSpeedSlider" value="50" min="1" max="100">
             <br>
@@ -14,6 +21,7 @@
         <div id="bottomLeftMenu">
             <span id="text">
             Welcome to TETRIS <br>
+            BEST RESOLUTION: 1920 * 1080 - May bug on other resolutions
             Please Ignore the issues until I figure out how to fix them :')', <br>
             - Lines won't clear <br>
             - No Rotation Collision Detection <br>
@@ -23,20 +31,15 @@
             - Yes playing is currently completly pointless lol <br>
             
             CONTROLS: <br>
-            LEFT Arrow: Move Left <br>
-            RIGHT Arrow: Move Right <br>
-            Z: Rotate Left <br>
-            X: Rotate Right <br>
+            LEFT: Move Left <br>
+            RIGHT: Move Right <br>
+            Z / UP: Rotate Left <br>
+            X / DOWN: Rotate Right <br>
             R: Restart <br>
             +/-: Change Game Speed
             </span>
         </div>
-        <main>
-            <canvas id="backgroundCanvas"></canvas>
-            
-                <canvas id="canvas" class="canvas"></canvas>
-            
-        </main>
+        
     </body>
     <script src="assets/js/script.js"></script>
     <script src="assets/js/background.js"></script>

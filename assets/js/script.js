@@ -76,9 +76,10 @@ function start() {
     animate();
 }
 start();
+
 function randomTetrimino() {
     var dy = 1;
-    var tetrimino = Math.floor(Math.random() * tetriminos.length);
+    var tetrimino = 0;//Math.floor(Math.random() * tetriminos.length);
     newTetrimino = tetriminos[tetrimino];
 
     var w = tetriminoWidth; 
@@ -153,7 +154,7 @@ function DrawInactive(x,y,w,h,color){
     
     this.draw = function(){
         c.beginPath();
-        c.strokeStyle = this.color;
+        c.strokeStyle = "black";//this.color;
         c.fillStyle = this.color;
         c.rect(this.x,this.y,this.w,this.h);
         c.stroke();
@@ -273,22 +274,17 @@ window.addEventListener("keydown", event => {
             activeTetriminos[0].x3 += activeTetriminos[0].h;
         }
     }
-    /*if (event.keyCode === 40) {
-        console.log("DOWN");
-        activeTetriminos[0].dy += 1;
-        activeTetriminos[0].dy += 1;
-        activeTetriminos[0].dy += 1;
-        activeTetriminos[0].dy += 1;
-        return; //DOWN
-    }*/
     
-    if (event.keyCode === 88) {
+    if (event.keyCode === 88 || event.keyCode === 38) {
         //Rotate right
         if (activeTetriminos[0].index == 0) { //LINE
+            if (activeTetriminos[0].x - (2 * tetriminoWidth) <= gridX || activeTetriminos[0].x3 + tetriminoWidth >= gridX + 10*tetriminoWidth) { 
+                return;    
+            }
             rotateBlock(8, -2, 2, -1, 1, 0, 0, 1, -1);
             return;
         }
-        if (activeTetriminos[0].index == 8) {//LINE
+        if (activeTetriminos[0].index == 8) { //LINE
             rotateBlock(0, 2, -2, 1, -1, 0, 0, -1, 1);
             return;
         }
@@ -362,9 +358,14 @@ window.addEventListener("keydown", event => {
             return;
         }
     }
-    if (event.keyCode === 90) {
+    if (event.keyCode === 90 || event.keyCode === 40) {
         //Rotate left
         if (activeTetriminos[0].index == 0) {//LINE
+            console.log(activeTetriminos[0].x - (2 * tetriminoWidth), gridX);
+            //COLLISION WITH SIDE
+            if (activeTetriminos[0].x - (2 * tetriminoWidth) <= gridX || activeTetriminos[0].x3 + tetriminoWidth >= gridX + 10*tetriminoWidth) { 
+                return;    
+            }
             rotateBlock(8, -2, 2, -1, 1, 0, 0, 1, -1);
             return;
         }
@@ -447,18 +448,7 @@ window.addEventListener("keydown", event => {
     //90 = z
 });  
 
-function rotateBlock(newIndex, xm1, ym1, xm2, ym2, xm3, ym3, xm4, ym4) {
-    //ROTATION COLLISION WITH SIDES
-    var ax1 = activeTetriminos[0].x;
-    var ax2 = activeTetriminos[0].x1;
-    var ax3 = activeTetriminos[0].x2;
-    var ax4 = activeTetriminos[0].x3;
-    var aW =  activeTetriminos[0].w
-    
-    /*if (ax1 + (xm1 * aW) == gridX || ax1 + (xm1 * aW) == gridX + gridWidth * aW || activeTetriminos[0].x1 + (xm2 * activeTetriminos[0].w) == gridX || activeTetriminos[0].x1 + (xm1 * activeTetriminos[0].w) == gridX + gridWidth * activeTetriminos[0].w || activeTetriminos[0].x2 + (xm3 * activeTetriminos[0].w) == gridX || activeTetriminos[0].x2 + (xm1 * activeTetriminos[0].w) == gridX + gridWidth * activeTetriminos[0].w || activeTetriminos[0].x3 + (xm4 * activeTetriminos[0].w) == gridX || activeTetriminos[0].x3 + (xm1 * activeTetriminos[0].w) == gridX + gridWidth * activeTetriminos[0].w) {
-        console.log("HMHMMM");
-        return;
-    }*/
+function rotateBlock(newIndex, xm1, ym1, xm2, ym2, xm3, ym3, xm4, ym4) {    
     activeTetriminos[0].x = activeTetriminos[0].x + (xm1 * activeTetriminos[0].w);
     activeTetriminos[0].x1 = activeTetriminos[0].x1 + (xm2 * activeTetriminos[0].w);
     activeTetriminos[0].x2 = activeTetriminos[0].x2 + (xm3 * activeTetriminos[0].w);
@@ -469,7 +459,7 @@ function rotateBlock(newIndex, xm1, ym1, xm2, ym2, xm3, ym3, xm4, ym4) {
     activeTetriminos[0].y3 = activeTetriminos[0].y3 + (ym4 * activeTetriminos[0].w);  
     activeTetriminos[0].index = newIndex;
 }
-var keyPress = true;
+
 function DrawTetrimino(x, y, x1, y1, x2, y2, x3, y3, w, h, color, index, dy) {
     this.index = index;
     this.color = color;
@@ -486,7 +476,7 @@ function DrawTetrimino(x, y, x1, y1, x2, y2, x3, y3, w, h, color, index, dy) {
     this.y3 = gridY + (y3 * this.h) - this.h;
     this.draw = function() {
         c.beginPath();
-        c.strokeStyle = this.color;
+        c.strokeStyle = "black";//this.color;
         c.fillStyle = this.color;
         c.rect(this.x,this.y,this.w,this.h);
         c.rect(this.x1,this.y1,this.w,this.h);
